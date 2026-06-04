@@ -1,0 +1,46 @@
+{
+  "model": "InternVL3.5-2B",
+  "dataset": "ViRL39K val_cis_ready",
+  "num_samples": 444,
+  "inference_engine": "vLLM 0.11.0",
+  "sampling": "greedy (temperature=0.0)",
+  "max_new_tokens": 1024,
+  "results": {
+    "base": {
+      "model_path": "OpenGVLab/InternVL3_5-2B",
+      "acc@1": 0.2162,
+      "format@1": 0.3536,
+      "correct": 96,
+      "total": 444
+    },
+    "baseline_grpo": {
+      "model_path": "checkpoints/baseline_grpo_internvl3_5_2b/global_step_200",
+      "acc@1": 0.4550,
+      "format@1": 0.9392,
+      "correct": 202,
+      "total": 444
+    },
+    "cis_grpo_v4_fmtonly": {
+      "model_path": "checkpoints/cis_grpo_internvl3_5_2b_v4fmtonly/global_step_200",
+      "acc@1": 0.5023,
+      "format@1": 0.9617,
+      "correct": 223,
+      "total": 444
+    }
+  },
+  "relative_improvement": {
+    "cis_grpo_vs_grpo_acc_pp": 4.73,
+    "cis_grpo_vs_base_acc_pp": 28.61,
+    "grpo_vs_base_acc_pp": 23.88
+  },
+  "training_config": {
+    "cis_beta": 0.0,
+    "cis_cf_format_weight": 0.1,
+    "alpha": 0.2,
+    "total_steps": 200,
+    "train_batch_size": 16,
+    "max_prompt_length": 4096,
+    "max_response_length": 1024,
+    "learning_rate": 1e-6
+  }
+}

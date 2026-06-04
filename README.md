@@ -48,6 +48,23 @@ pip install -r requirements.txt
 
 ### Verl Adapters
 
+The full set of patches (InternVL processor, VLM monkey-patches, config accessors) are
+available as a verl fork:
+
+**https://github.com/sunshine-JLU/verl** (branch `feature/internvl2_5-support`)
+
+To install:
+
+```bash
+git clone https://github.com/sunshine-JLU/verl.git
+cd verl
+git checkout feature/internvl2_5-support
+pip install -e .
+```
+
+<details>
+<summary>Or manually apply patches (click to expand)</summary>
+
 Some models (InternVL family) lack standard HuggingFace multimodal processors. Copy the adapter into verl:
 
 ```bash
@@ -63,6 +80,8 @@ _CUSTOM_PROCESSOR_CLASSES: dict[str, str] = {
 ```
 
 See [PATCHES.md](PATCHES.md) for the full list of required verl patches.
+
+</details>
 
 ## Data Preparation
 
@@ -85,6 +104,22 @@ python data_prep/prepare_cis_ready.py
 
 Output: `train_cis_ready.parquet` and `val_cis_ready.parquet`.
 
+## Results
+
+### InternVL3.5-2B on ViRL39K
+
+External evaluation with vLLM 0.11.0 (greedy, temperature=0.0, max_new_tokens=1024):
+
+| Model | acc@1 | format@1 | Correct |
+|-------|-------|----------|---------|
+| Base | 0.2162 | 0.3536 | 96/444 |
+| Baseline GRPO (200 steps) | 0.4550 | 0.9392 | 202/444 |
+| **CIS-GRPO v4 fmtonly** (200 steps) | **0.5023** | **0.9617** | 223/444 |
+
+CIS-GRPO beats baseline GRPO by **+4.73 pp** and base model by **+28.6 pp**.
+
+Detailed results: [`results/internvl3_5_2b_three_way.json`](results/internvl3_5_2b_three_way.json)
+
 ## Training
 
 ```bash
@@ -93,6 +128,10 @@ bash scripts/run_cis_grpo_3b.sh
 
 # Baseline GRPO for comparison
 bash scripts/run_baseline_grpo_3b.sh
+
+# InternVL3.5-2B
+bash scripts/run_internvl3_5_2b_cis_grpo.sh
+bash scripts/run_internvl3_5_2b_baseline_grpo.sh
 ```
 
 Key parameters (set via environment variables):
