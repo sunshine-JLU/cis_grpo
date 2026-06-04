@@ -66,7 +66,7 @@ DATA=(
     data.filter_overlong_prompts=False
     data.truncation='error'
     data.trust_remote_code=True
-    data.custom_cls.path=$PROJECT_ROOT/cis_grpo/dataset.py
+    data.custom_cls.path=$PROJECT_ROOT/cis_grpo/cis_grpo/dataset.py
     data.custom_cls.name=CISGrpoDataset
     "+data.cis.swap_offset=${cis_swap_offset}"
     "+data.cis.swap_seed=${cis_swap_seed}"
@@ -75,7 +75,7 @@ DATA=(
 )
 
 REWARD=(
-    custom_reward_function.path=$PROJECT_ROOT/cis_grpo/reward_nothink.py
+    custom_reward_function.path=$PROJECT_ROOT/cis_grpo/cis_grpo/reward_nothink.py
     custom_reward_function.name=compute_score
     "+custom_reward_function.reward_kwargs.cis_beta=${cis_beta}"
     "+custom_reward_function.reward_kwargs.cis_cf_format_weight=${cis_cf_format_weight}"
@@ -140,7 +140,7 @@ EXTRA=(
     actor_rollout_ref.rollout.free_cache_engine=True
 )
 
-export PYTHONPATH="$PROJECT_ROOT:${PYTHONPATH:-}"
+export PYTHONPATH="$PROJECT_ROOT/cis_grpo:${PYTHONPATH:-}"
 
 python3 -m verl.trainer.main_ppo \
     "${DATA[@]}" \

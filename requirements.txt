@@ -1,9 +1,33 @@
-torch>=2.6.0
-vllm>=0.10.0
-transformers>=4.51.0
-ray>=2.40.0
+# Core verl dependencies
+accelerate
+codetiming
+datasets
+dill
+hydra-core
 numpy
+pandas
+peft
+pyarrow>=19.0.0
+pybind11
+pylatexenc
+ray[default]>=2.41.0
+torchdata
+tensordict>=0.8.0,<=0.10.0,!=0.9.0
+transformers
+wandb
+packaging>=20.0
+tensorboard
+
+# VLM / InternVL support
+mathruler
+torchvision
+qwen_vl_utils
 Pillow
 omegaconf
-hydra-core
-mathruler
+
+# GPU
+liger-kernel
+flash-attn
+
+# vLLM inference
+vllm>=0.8.5,<=0.12.0

@@ -29,59 +29,19 @@ Each CIS-GRPO script has a matching baseline GRPO script (e.g., `run_baseline_gr
 
 ### Prerequisites
 
-- [verl](https://github.com/volcengine/verl) (tested with v0.6.x)
-- [vLLM](https://github.com/vllm-project/vllm) >= 0.10.0
-- [mathruler](https://github.com/haoqiangchen/mathruler) (for boxed answer grading)
+- vLLM >= 0.10.0
+- mathruler (for boxed answer grading)
 - PyTorch >= 2.6, 4× GPU with 32GB+ VRAM
 
 ### Setup
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/cis_grpo.git
+git clone https://github.com/sunshine-JLU/cis_grpo.git
 cd cis_grpo
 pip install -r requirements.txt
-
-# Install verl (follow upstream instructions)
-# git clone https://github.com/volcengine/verl.git
-# cd verl && pip install -e .
 ```
 
-### Verl Adapters
-
-The full set of patches (InternVL processor, VLM monkey-patches, config accessors) are
-available as a verl fork:
-
-**https://github.com/sunshine-JLU/verl** (branch `feature/internvl2_5-support`)
-
-To install:
-
-```bash
-git clone https://github.com/sunshine-JLU/verl.git
-cd verl
-git checkout feature/internvl2_5-support
-pip install -e .
-```
-
-<details>
-<summary>Or manually apply patches (click to expand)</summary>
-
-Some models (InternVL family) lack standard HuggingFace multimodal processors. Copy the adapter into verl:
-
-```bash
-cp verl_adapters/internvl_processor.py /path/to/verl/verl/utils/
-```
-
-Then register it in `verl/utils/tokenizer.py` by adding to the custom processor registry:
-
-```python
-_CUSTOM_PROCESSOR_CLASSES: dict[str, str] = {
-    "internvl_chat": "verl.utils.internvl_processor.InternVLProcessor",
-}
-```
-
-See [PATCHES.md](PATCHES.md) for the full list of required verl patches.
-
-</details>
+This repo bundles a vendored copy of [verl](https://github.com/sunshine-JLU/verl) with built-in InternVL processor support — no separate verl installation or manual patching needed.
 
 ## Data Preparation
 

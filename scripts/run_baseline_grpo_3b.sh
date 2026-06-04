@@ -62,7 +62,7 @@ DATA=(
 )
 
 REWARD=(
-    custom_reward_function.path=$PROJECT_ROOT/cis_grpo/reward.py
+    custom_reward_function.path=$PROJECT_ROOT/cis_grpo/cis_grpo/reward.py
     custom_reward_function.name=compute_score
 )
 
@@ -124,6 +124,8 @@ EXTRA=(
     actor_rollout_ref.rollout.enforce_eager=True
     actor_rollout_ref.rollout.free_cache_engine=True
 )
+
+export PYTHONPATH="$PROJECT_ROOT/cis_grpo:${PYTHONPATH:-}"
 
 python3 -m verl.trainer.main_ppo \
     "${DATA[@]}" \

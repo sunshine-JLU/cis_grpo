@@ -61,7 +61,7 @@ DATA=(
 )
 
 REWARD=(
-    custom_reward_function.path=$PROJECT_ROOT/cis_grpo/reward_nothink.py
+    custom_reward_function.path=$PROJECT_ROOT/cis_grpo/cis_grpo/reward_nothink.py
     custom_reward_function.name=compute_score
 )
 
@@ -125,7 +125,7 @@ EXTRA=(
     actor_rollout_ref.rollout.multi_stage_wake_up=True
 )
 
-export PYTHONPATH="$PROJECT_ROOT/verl:${PYTHONPATH:-}"
+export PYTHONPATH="$PROJECT_ROOT/cis_grpo:${PYTHONPATH:-}"
 
 python3 -m verl.trainer.main_ppo \
     "${DATA[@]}" \
