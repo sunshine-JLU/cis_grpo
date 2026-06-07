@@ -1,0 +1,111 @@
+{
+  "model": "InternVL3-2B",
+  "dataset": "ViRL39K val_cis_ready",
+  "num_samples": 444,
+  "inference_engine": "vLLM 0.11.0",
+  "sampling": "greedy (temperature=0.0)",
+  "max_new_tokens": 1024,
+  "gpus": "4x RTX-4080-SUPER (32GB)",
+  "tensor_parallel_size": 2,
+  "results": {
+    "base": {
+      "model_path": "OpenGVLab/InternVL3-2B",
+      "acc@1": 0.3761,
+      "format@1": 0.9347,
+      "correct": 167,
+      "total": 444
+    },
+    "baseline_grpo": {
+      "model_path": "merged_models/baseline_grpo_internvl3_2b",
+      "acc@1": 0.4032,
+      "format@1": 0.9662,
+      "correct": 179,
+      "total": 444
+    },
+    "cis_grpo_v4_fmtonly": {
+      "model_path": "merged_models/cis_grpo_internvl3_2b_v4fmtonly",
+      "acc@1": 0.4099,
+      "format@1": 0.9775,
+      "correct": 182,
+      "total": 444
+    }
+  },
+  "relative_improvement": {
+    "cis_grpo_vs_grpo_acc_pp": 0.67,
+    "cis_grpo_vs_base_acc_pp": 3.38,
+    "grpo_vs_base_acc_pp": 2.71
+  },
+  "by_category": {
+    "(GradeSchool) Geometric": {
+      "n": 130,
+      "base": 0.3231,
+      "grpo": 0.4231,
+      "cis_grpo": 0.4462
+    },
+    "(GradeSchool) Non-Geo Math": {
+      "n": 155,
+      "base": 0.3871,
+      "grpo": 0.4000,
+      "cis_grpo": 0.3355
+    },
+    "Tables/Diagrams/Charts": {
+      "n": 78,
+      "base": 0.4231,
+      "grpo": 0.3974,
+      "cis_grpo": 0.5000
+    },
+    "(GradeSchool) Science": {
+      "n": 35,
+      "base": 0.4571,
+      "grpo": 0.3714,
+      "cis_grpo": 0.4000
+    },
+    "Spatial Reasoning": {
+      "n": 30,
+      "base": 0.3000,
+      "grpo": 0.3333,
+      "cis_grpo": 0.4333
+    },
+    "Broader STEM Topics": {
+      "n": 11,
+      "base": 0.4545,
+      "grpo": 0.4545,
+      "cis_grpo": 0.3636
+    },
+    "Social Science": {
+      "n": 4,
+      "base": 0.5000,
+      "grpo": 0.7500,
+      "cis_grpo": 0.5000
+    }
+  },
+  "by_source": {
+    "Processed": {"n": 143, "base": 0.3287, "grpo": 0.4266, "cis_grpo": 0.4336},
+    "MMK12": {"n": 142, "base": 0.3944, "grpo": 0.3662, "cis_grpo": 0.3803},
+    "MMMath": {"n": 49, "base": 0.3061, "grpo": 0.3265, "cis_grpo": 0.2245},
+    "K12": {"n": 16, "base": 0.6250, "grpo": 0.5000, "cis_grpo": 0.3125},
+    "DeepScaleR": {"n": 16, "base": 0.1250, "grpo": 0.2500, "cis_grpo": 0.3125},
+    "M3CoT": {"n": 15, "base": 0.4000, "grpo": 0.4000, "cis_grpo": 0.4667},
+    "geoqa_plus": {"n": 14, "base": 0.3571, "grpo": 0.7143, "cis_grpo": 0.6429},
+    "ai2d": {"n": 12, "base": 0.7500, "grpo": 0.3333, "cis_grpo": 0.6667},
+    "dvqa": {"n": 12, "base": 0.7500, "grpo": 0.6667, "cis_grpo": 0.8333},
+    "R1OneVision": {"n": 10, "base": 0.4000, "grpo": 0.4000, "cis_grpo": 0.5000},
+    "ScienceQA": {"n": 7, "base": 0.5714, "grpo": 0.8571, "cis_grpo": 0.7143}
+  },
+  "training_config": {
+    "cis_beta": 0.0,
+    "cis_cf_format_weight": 0.1,
+    "alpha": 0.2,
+    "total_steps": 200,
+    "train_batch_size": 16,
+    "ppo_mini_batch_size": 8,
+    "max_prompt_length": 4096,
+    "max_response_length": 1024,
+    "learning_rate": 1e-6,
+    "rollout_n": 4,
+    "architecture": "2B Qwen2 LLM + 6B intern_vit_6b ViT",
+    "baseline_checkpoint": "checkpoints/cis_grpo/baseline_grpo_internvl3_2b_20260605_2244/global_step_200",
+    "cis_grpo_checkpoint": "checkpoints/cis_grpo/cis_grpo_internvl3_2b_v4fmtonly_20260606_1128/global_step_200",
+    "eval_note": "CIS-GRPO vs GRPO gap is small (<1pp) and run-to-run variance is ~2pp. InternVL3-2B results are inconclusive — unlike InternVL3.5-2B where CIS-GRPO clearly won by +4.7pp."
+  }
+}
