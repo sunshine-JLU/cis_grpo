@@ -22,6 +22,7 @@ Key components:
 | Qwen3-VL-4B-Instruct | Yes | `scripts/run_cis_grpo_4b_think.sh` |
 | InternVL2.5-4B-Instruct | No | `scripts/run_cis_grpo_internvl_4b.sh` |
 | InternVL3.5-2B | No | `scripts/run_internvl3_5_2b_cis_grpo.sh` |
+| InternVL3-2B | No | `scripts/run_cis_grpo_internvl3_2b.sh` |
 
 Each CIS-GRPO script has a matching baseline GRPO script (e.g., `run_baseline_grpo_3b.sh`).
 
@@ -79,6 +80,20 @@ External evaluation with vLLM 0.11.0 (greedy, temperature=0.0, max_new_tokens=10
 CIS-GRPO beats baseline GRPO by **+4.73 pp** and base model by **+28.6 pp**.
 
 Detailed results: [`results/internvl3_5_2b_three_way.json`](results/internvl3_5_2b_three_way.json)
+
+### InternVL3-2B on ViRL39K
+
+External evaluation with vLLM 0.11.0 (greedy, temperature=0.0, max_new_tokens=1024):
+
+| Model | acc@1 | format@1 | Correct |
+|-------|-------|----------|---------|
+| Base | 0.3761 | 0.9347 | 167/444 |
+| Baseline GRPO (200 steps) | 0.4032 | 0.9662 | 179/444 |
+| **CIS-GRPO v4 fmtonly** (200 steps) | **0.4099** | **0.9775** | 182/444 |
+
+CIS-GRPO beats baseline GRPO by **+0.67 pp** and base model by **+3.38 pp**. The improvement is marginal (within run-to-run variance of ~2 pp), unlike InternVL3.5-2B where CIS-GRPO won clearly (+4.73 pp). InternVL3-2B's 6B ViT + 2B LLM architecture may not benefit from format-only CF regularization the same way.
+
+Detailed results: [`results/internvl3_2b_three_way.json`](results/internvl3_2b_three_way.json)
 
 ## Training
 
